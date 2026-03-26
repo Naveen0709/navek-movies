@@ -1,0 +1,213 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+
+.watchlist-page {
+    min-height: 100vh;
+    background: radial-gradient(circle at top right, #1a1a2e, #040b12 70%);
+    color: #fff;
+    font-family: 'Outfit', sans-serif;
+    padding-bottom: 100px;
+}
+
+.watchlist-header {
+    padding-top: 60px;
+    margin-bottom: 50px;
+    text-align: left;
+}
+
+.watchlist-title {
+    font-size: 48px;
+    font-weight: 800;
+    background: linear-gradient(90deg, #fff, #00b7ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.watchlist-count {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.4);
+    font-weight: 400;
+    margin-top: 5px;
+}
+
+/* Grid Layout */
+.watchlist-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 30px;
+}
+
+.watch-card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.watch-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    border-color: #00b7ff;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 183, 255, 0.2);
+}
+
+.watch-poster-wrapper {
+    position: relative;
+    height: 330px;
+    overflow: hidden;
+}
+
+.watch-poster {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.watch-card:hover .watch-poster {
+    transform: scale(1.1);
+}
+
+.watch-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 10%, transparent 60%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.watch-card:hover .watch-overlay {
+    opacity: 1;
+}
+
+.watch-actions-top {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 10;
+}
+
+.remove-btn {
+    width: 36px;
+    height: 36px;
+    background: rgba(255, 60, 60, 0.2);
+    border: 1px solid rgba(255, 60, 60, 0.3);
+    border-radius: 50%;
+    color: #ff4d4d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.remove-btn:hover {
+    background: #ff4d4d;
+    color: #fff;
+    transform: rotate(90deg);
+}
+
+.watch-details {
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.watch-details h5 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.watch-meta-info {
+    display: flex;
+    gap: 10px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.4);
+    margin-bottom: 10px;
+}
+
+.watch-genre-tag {
+    color: #00b7ff;
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+}
+
+.watch-play-btn {
+    width: 100%;
+    height: 40px;
+    background: #fff;
+    color: #000;
+    border: none;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 14px;
+    margin-top: 10px;
+    transition: all 0.3s ease;
+}
+
+.watch-play-btn:hover {
+    background: #00b7ff;
+    color: #fff;
+}
+
+/* Empty State */
+.empty-watchlist {
+    text-align: center;
+    padding: 100px 20px;
+}
+
+.empty-icon {
+    font-size: 80px;
+    margin-bottom: 20px;
+    opacity: 0.3;
+}
+
+.empty-watchlist h3 {
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.browse-btn {
+    margin-top: 25px;
+    padding: 12px 30px;
+    background: transparent;
+    border: 2px solid #00b7ff;
+    color: #00b7ff;
+    border-radius: 30px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.browse-btn:hover {
+    background: #00b7ff;
+    color: #fff;
+    box-shadow: 0 0 20px rgba(0, 183, 255, 0.4);
+}
+
+@media (max-width: 768px) {
+    .watchlist-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 15px;
+    }
+
+    .watch-poster-wrapper {
+        height: 240px;
+    }
+}

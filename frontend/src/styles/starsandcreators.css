@@ -1,0 +1,341 @@
+/* Stars & Creators Page Styles */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+
+.stars-page {
+    min-height: 100vh;
+    background: #040b12;
+    color: #fff;
+    font-family: 'Outfit', sans-serif;
+    padding: 40px 0 80px;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.stars-page::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 500px;
+    background: radial-gradient(circle at 50% -20%, rgba(255, 204, 0, 0.05), transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.stars-header-section {
+    text-align: center;
+    margin-bottom: 50px;
+    position: relative;
+    z-index: 2;
+}
+
+.stars-main-title {
+    font-size: 48px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #fff, #ffd700);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 15px;
+    letter-spacing: -1px;
+}
+
+.stars-subtitle {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 16px;
+    max-width: 600px;
+    margin: 0 auto;
+    font-weight: 400;
+}
+
+.stars-section {
+    margin-bottom: 60px;
+    position: relative;
+    z-index: 2;
+}
+
+.stars-section h3 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 10px;
+}
+
+.stars-slider-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.stars-arrow {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: absolute;
+    z-index: 10;
+    backdrop-filter: blur(10px);
+}
+
+.stars-arrow:hover {
+    background: #fff;
+    color: #000;
+    transform: scale(1.1);
+}
+
+.stars-arrow.left {
+    left: -20px;
+}
+
+.stars-arrow.right {
+    right: -20px;
+}
+
+.stars-row {
+    display: flex;
+    gap: 30px;
+    overflow-x: auto;
+    padding: 20px 10px 40px;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+    width: 100%;
+}
+
+.stars-row::-webkit-scrollbar {
+    display: none;
+}
+
+.star-card {
+    min-width: 160px;
+    max-width: 160px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.star-image-container {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    padding: 4px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02));
+    position: relative;
+    margin-bottom: 15px;
+    transition: all 0.4s ease;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.star-image-container::before {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ffd700, #ff8c00);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.star-card:hover .star-image-container::before {
+    opacity: 1;
+    animation: rotateGlow 3s linear infinite;
+}
+
+@keyframes rotateGlow {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.star-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #111;
+    border: 2px solid #040b12;
+    transition: transform 0.4s ease;
+}
+
+.star-card:hover {
+    transform: translateY(-10px);
+}
+
+.star-card:hover .star-image {
+    transform: scale(1.05);
+}
+
+.star-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 4px;
+}
+
+.star-role {
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Add custom colored glow for different sections */
+.stars-section:nth-child(1) .star-card:hover .star-image-container::before {
+    background: linear-gradient(135deg, #00b7ff, #0051ff);
+}
+
+.stars-section:nth-child(2) .star-card:hover .star-image-container::before {
+    background: linear-gradient(135deg, #ff007b, #ff0044);
+}
+
+.stars-section:nth-child(3) .star-card:hover .star-image-container::before {
+    background: linear-gradient(135deg, #ffd700, #ff6600);
+}
+
+.stars-section:nth-child(4) .star-card:hover .star-image-container::before {
+    background: linear-gradient(135deg, #00ff88, #00b3ff);
+}
+
+.stars-section:nth-child(5) .star-card:hover .star-image-container::before {
+    background: linear-gradient(135deg, #ff0000, #8b0000);
+}
+
+/* ===========================
+   Star Movies Modal Styling
+============================ */
+.star-movies-modal .modal-content {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7);
+    border-radius: 20px;
+}
+
+.star-movies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 20px;
+    padding: 10px;
+}
+
+.star-movie-card {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.star-movie-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(255, 204, 0, 0.5);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+}
+
+.star-movie-poster-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    overflow: hidden;
+}
+
+.star-movie-poster {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.star-movie-card:hover .star-movie-poster {
+    transform: scale(1.1);
+}
+
+.star-movie-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, transparent 60%);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 10px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.star-movie-card:hover .star-movie-overlay {
+    opacity: 1;
+}
+
+.star-movie-rating {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffcc00;
+}
+
+.star-movie-year {
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.star-movie-info {
+    padding: 12px;
+}
+
+.star-movie-info h6 {
+    font-size: 14px;
+    color: #fff;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .stars-main-title {
+        font-size: 36px;
+    }
+
+    .star-card {
+        min-width: 120px;
+        max-width: 120px;
+    }
+
+    .star-image-container {
+        width: 100px;
+        height: 100px;
+    }
+
+    .star-name {
+        font-size: 14px;
+    }
+}
