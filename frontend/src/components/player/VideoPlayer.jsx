@@ -17,6 +17,12 @@ const VideoPlayer = ({ movie, onNext }) => {
   const [playerType, setPlayerType] = useState("yt"); // 'native' or 'yt'
   const controlsTimeout = useRef(null);
   const progressInterval = useRef(null);
+  const volumeRef = useRef(volume);
+
+  // Sync volumeRef with volume state
+  useEffect(() => {
+    volumeRef.current = volume;
+  }, [volume]);
 
   const stopYTProgress = useCallback(() => {
     if (progressInterval.current) clearInterval(progressInterval.current);
@@ -74,7 +80,7 @@ const VideoPlayer = ({ movie, onNext }) => {
         events: {
           onReady: (event) => {
             setDuration(event.target.getDuration());
-            event.target.setVolume(volume * 100);
+            event.target.setVolume(volumeRef.current * 100);
             setIsBuffering(false);
             startYTProgress();
           },
@@ -99,7 +105,8 @@ const VideoPlayer = ({ movie, onNext }) => {
     }
 
     return () => stopYTProgress();
-  }, [movie, playerType, onNext, startYTProgress, stopYTProgress]); // Remove volume from dependencies
+  }, [movie, playerType, onNext, startYTProgress, stopYTProgress]); 
+
 
   // 🔊 Synchronize Volume (Separate Effect)
   useEffect(() => {
