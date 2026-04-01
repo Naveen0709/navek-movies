@@ -99,7 +99,19 @@ const VideoPlayer = ({ movie, onNext }) => {
     }
 
     return () => stopYTProgress();
-  }, [movie, playerType, onNext, startYTProgress, stopYTProgress, volume]);
+  }, [movie, playerType, onNext, startYTProgress, stopYTProgress]); // Remove volume from dependencies
+
+  // 🔊 Synchronize Volume (Separate Effect)
+  useEffect(() => {
+    if (playerType === "yt" && ytPlayerRef.current) {
+        if (volume === 0) {
+            if (ytPlayerRef.current.mute) ytPlayerRef.current.mute();
+        } else {
+            if (ytPlayerRef.current.unMute) ytPlayerRef.current.unMute();
+            if (ytPlayerRef.current.setVolume) ytPlayerRef.current.setVolume(volume * 100);
+        }
+    }
+  }, [volume, playerType]); 
 
   const togglePlay = () => {
     if (playerType === "native" && videoRef.current) {

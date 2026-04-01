@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import VideoPlayer from "../components/player/VideoPlayer";
 import axios from "axios";
@@ -42,14 +42,14 @@ export default function Player() {
     }
   }, [id, movie]);
 
-  const handleNextPlay = () => {
+  const handleNextPlay = useCallback(() => {
     if (recommendations.length > 0) {
       const nextMovie = recommendations[0];
       navigate(`/watch/${nextMovie._id}`, { state: { movie: nextMovie } });
     } else {
       navigate("/home");
     }
-  };
+  }, [recommendations, navigate]);
 
   if (loading) return (
     <div className="player-loading-wrapper">

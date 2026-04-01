@@ -143,7 +143,7 @@ export default function Profile() {
           <div className="ultimate-avatar-box" onClick={() => setShowAvatarModal(true)}>
              <div className="ultimate-ring">
                 {profilePic ? (
-                  <img src={profilePic} alt="profile" className="ultimate-img" />
+                  <img src={profilePic} alt={user.name} className="ultimate-img" />
                 ) : (
                   <div className="ultimate-initial">{user.name[0]}</div>
                 )}
@@ -216,7 +216,7 @@ export default function Profile() {
                   <div className="u-grid-layout">
                      {watchHistory.slice(0, 10).map((m, i) => (
                         <div key={i} className="u-poster-card" onClick={() => handlePlay(m)}>
-                           <img src={m.poster} alt="poster" className="u-poster-img" />
+                           <img src={m.poster} alt={m.title} className="u-poster-img" />
                            <div className="u-poster-aura"></div>
                         </div>
                      ))}

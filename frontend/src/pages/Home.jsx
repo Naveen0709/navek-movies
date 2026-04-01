@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { getMovies } from "../services/movieService";
 import GenreSection from "../components/movie/GenreSection";
@@ -199,7 +199,7 @@ export default function Home() {
   );
 
   // 🏙️ HERO CAROUSEL DATA (VERIFIED TRAILERS)
-  const heroData = [
+  const heroData = useMemo(() => [
     {
       title: "Spider-Man",
       subTitle: "Across the Spider-Verse",
@@ -242,7 +242,7 @@ export default function Home() {
       trailerId: "giXco2jaZ_4", 
       movieObj: { title: "Top Gun: Maverick", _id: "local_tgm" }
     }
-  ];
+  ], [trendingMovies, topPicks]);
 
   const [heroIndex, setHeroIndex] = useState(0);
 
