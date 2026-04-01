@@ -179,7 +179,7 @@ const VideoPlayer = ({ movie, onNext }) => {
           <video
             ref={videoRef}
             className="main-video-element"
-            src={`http://localhost:5000/api/movies/${movie?._id}/stream?quality=${quality}`}
+            src={`https://navek-movies-xu0e.onrender.com/api/movies/${movie?._id}/stream?quality=${quality}`}
             onTimeUpdate={() => setCurrentTime(videoRef.current.currentTime)}
             onLoadedMetadata={() => setDuration(videoRef.current.duration)}
             onPlaying={() => setIsBuffering(false)}
