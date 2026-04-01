@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API = "http://localhost:5000/api";
+const API = "https://navek-movies-xu0e.onrender.com/api";
 
 export const getMovies = (limit = 50, genre = "", language = "") =>
     axios.get(`${API}/movies?limit=${limit}&genre=${genre}&language=${language}`);

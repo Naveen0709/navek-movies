@@ -90,7 +90,7 @@ export default function CinematicAI() {
             }
 
             // Standard Backend AI Path - We include the user's message as is
-            const response = await fetch("http://localhost:5000/api/ai/chat", {
+            const response = await fetch("https://navek-movies-xu0e.onrender.com/api/ai/chat", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ prompt: userText })

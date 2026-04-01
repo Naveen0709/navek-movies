@@ -17,11 +17,11 @@ export default function Player() {
   useEffect(() => {
     const fetchMovie = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/movies/${id}`);
+        const res = await axios.get(`https://navek-movies-xu0e.onrender.com/api/movies/${id}`);
         setMovie(res.data);
         
         // Fetch recommendations for next play
-        const recRes = await axios.get(`http://localhost:5000/api/movies?limit=5`);
+        const recRes = await axios.get(`https://navek-movies-xu0e.onrender.com/api/movies?limit=5`);
         setRecommendations(recRes.data.filter(m => m._id !== id));
         
         setLoading(false);
@@ -36,7 +36,7 @@ export default function Player() {
       fetchMovie();
     } else {
         // Just fetch recommendations
-        axios.get(`http://localhost:5000/api/movies?limit=5`).then(res => {
+        axios.get(`https://navek-movies-xu0e.onrender.com/api/movies?limit=5`).then(res => {
             setRecommendations(res.data.filter(m => m._id !== id));
         });
     }
