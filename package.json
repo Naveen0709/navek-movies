@@ -1,0 +1,12 @@
+{
+  "name": "navek-movies-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build:backend": "cd backend && npm install",
+    "build:frontend": "cd frontend && npm install && npm run build",
+    "build": "echo 'Specify build:backend or build:frontend'",
+    "start:backend": "cd backend && npm start",
+    "start:frontend": "cd frontend && npm start"
+  }
+}
