@@ -18,6 +18,19 @@ const VideoPlayer = ({ movie, onNext }) => {
   const controlsTimeout = useRef(null);
   const progressInterval = useRef(null);
 
+  const stopYTProgress = useCallback(() => {
+    if (progressInterval.current) clearInterval(progressInterval.current);
+  }, []);
+
+  const startYTProgress = useCallback(() => {
+    stopYTProgress();
+    progressInterval.current = setInterval(() => {
+      if (ytPlayerRef.current && ytPlayerRef.current.getCurrentTime) {
+        setCurrentTime(ytPlayerRef.current.getCurrentTime());
+      }
+    }, 500);
+  }, [stopYTProgress]);
+
   // 🛠️ Check Source Type on Mount/Movie Change
   useEffect(() => {
     const hasLocalSource = movie?.videoUrls?.["720p"] || movie?.videoUrls?.["480p"] || movie?.videoUrls?.["1080p"];
@@ -88,20 +101,6 @@ const VideoPlayer = ({ movie, onNext }) => {
     return () => stopYTProgress();
   }, [movie, playerType, onNext, startYTProgress, stopYTProgress, volume]);
 
-  const startYTProgress = useCallback(() => {
-    stopYTProgress();
-    progressInterval.current = setInterval(() => {
-      if (ytPlayerRef.current && ytPlayerRef.current.getCurrentTime) {
-        setCurrentTime(ytPlayerRef.current.getCurrentTime());
-      }
-    }, 500);
-  }, [stopYTProgress]);
-
-  const stopYTProgress = useCallback(() => {
-    if (progressInterval.current) clearInterval(progressInterval.current);
-  }, []);
-
-  // 🔊 Generic Handlers for Both Players
   const togglePlay = () => {
     if (playerType === "native" && videoRef.current) {
       if (videoRef.current.paused) videoRef.current.play();

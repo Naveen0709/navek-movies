@@ -13,9 +13,6 @@ export default function Home() {
   const navigate = useNavigate();
   const [globalMovies, setGlobalMovies] = useState([]);
   const [actionMovies, setActionMovies] = useState([]);
-  const [watchlist, setWatchlist] = useState(
-    JSON.parse(localStorage.getItem("watchlist")) || []
-  );
   const [genreFilterMovies, setGenreFilterMovies] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState("");
   const [languageFilterMovies, setLanguageFilterMovies] = useState([]);
