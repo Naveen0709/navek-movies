@@ -118,8 +118,26 @@ export default function CinematicAI() {
     };
 
     const handleMovieClick = (movie) => {
-        setSelectedMovie(movie);
+        const formatted = {
+            ...movie,
+            poster: movie.poster || "https://via.placeholder.com/300x450?text=Poster+Missing",
+            rating: movie.rating || "7.5",
+            year: movie.year || "2024",
+            genre: movie.genre || "AI Hit",
+            description: movie.description || "An AI recommended cinematic choice."
+        };
+
+        setSelectedMovie(formatted);
         setIsTrailerOpen(true);
+
+        // 📝 Tracking Click History for Profile Page
+        let history = JSON.parse(localStorage.getItem("clickedHistory")) || [];
+        if (!history.find(m => m.title === formatted.title)) {
+            history.push(formatted);
+            // Keep recent 50
+            if (history.length > 50) history.shift();
+            localStorage.setItem("clickedHistory", JSON.stringify(history));
+        }
     };
 
     const clearChat = () => {

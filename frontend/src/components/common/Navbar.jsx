@@ -37,11 +37,11 @@ export default function NavbarComp() {
     >
       <Container fluid className="px-2 px-md-4">
         <Navbar.Brand
-          className="brand-font fs-3 fw-bold text-white"
-          style={{ cursor: "pointer", letterSpacing: '1px' }}
+          className="brand-font fs-3 fw-bold"
+          style={{ cursor: "pointer" }}
           onClick={() => navigate("/home")}
         >
-          NAVEK <span style={{ color: "var(--primary)" }}>MOVIES</span> 🎬
+          NAVEK MOVIES
         </Navbar.Brand>
 
         <Navbar.Toggle aria-controls="basic-navbar-nav" className="border-0 shadow-none" />
@@ -84,9 +84,27 @@ export default function NavbarComp() {
             </Nav.Link>
 
             {user && (
-              <div className="user-profile ms-3 d-flex align-items-center">
-                <div className="user-avatar">{user.name[0]}</div>
-                <span className="ms-2 fw-semibold text-white d-none d-md-block">Hi, {user.name}</span>
+              <div 
+                className="user-profile ms-3 d-flex align-items-center" 
+                onClick={() => navigate("/profile")}
+                style={{ cursor: "pointer" }}
+                title="View Profile"
+              >
+                <div className="user-avatar-nav">
+                  {localStorage.getItem("profilePic") ? (
+                    <img 
+                      src={localStorage.getItem("profilePic")} 
+                      alt="profile" 
+                      className="nav-profile-img" 
+                    />
+                  ) : (
+                    user.name[0]
+                  )}
+                </div>
+                <div className="ms-2 d-none d-md-block">
+                   <div className="nav-hi-text">Hi,</div>
+                   <div className="nav-user-name">{user.name}</div>
+                </div>
               </div>
             )}
 

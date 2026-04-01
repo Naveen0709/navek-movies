@@ -10,6 +10,7 @@ import Watchlist from "./pages/Watchlist";
 import StarsAndCreators from "./pages/StarsAndCreators";
 import CinematicAI from "./pages/CinematicAI";
 import Player from "./pages/Player";
+import Profile from "./pages/Profile";
 
 
 import NavbarComp from "./components/common/Navbar";
@@ -64,6 +65,11 @@ export default function App() {
         <Route
           path="/cinematic-ai"
           element={user ? <CinematicAI /> : <Navigate to="/login" />}
+        />
+
+        <Route
+          path="/profile"
+          element={user ? <Profile /> : <Navigate to="/login" />}
         />
 
 

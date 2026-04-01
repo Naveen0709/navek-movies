@@ -51,7 +51,7 @@ const fetchSuperSafeMovies = async (url, categoryName) => {
               "hole-in-law", "mother-in-law", "sister-in-law", "daughter-in-law", "stepmother", 
               "stepsister", "stepdaughter", "young mother", "boarding house", "mom's friend",
               "mother's friend", "wife's friend", "bosomy", "prostitute", "big breasted", "sange",
-              "maid", "servant", "여제자", "장모님"
+              "maid", "servant", "여제자", "장모님", "nambul", "内罗南火"
             ];
             const textToCheck = (m.title + " " + m.overview).toLowerCase();
             if (forbiddenWords.some(word => textToCheck.includes(word))) {

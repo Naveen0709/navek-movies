@@ -219,11 +219,96 @@ export default function Home() {
     </div>
   );
 
+  // 🏙️ HERO CAROUSEL DATA (VERIFIED TRAILERS)
+  const heroData = [
+    {
+      title: "Spider-Man",
+      subTitle: "Across the Spider-Verse",
+      desc: "Miles Morales returns for the next chapter of the Oscar-winning Spider-Verse saga, an epic adventure that will transport Brooklyn's full-time, friendly neighborhood Spider-Man across the Multiverse.",
+      trailerId: "g4Hbz2jLxvQ", 
+      movieObj: trendingMovies[5]
+    },
+    {
+      title: "Avengers",
+      subTitle: "Endgame",
+      desc: "After the devastating events of Infinity War, the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to restore balance to the universe.",
+      trailerId: "TcMBFSGVi1c",
+      movieObj: topPicks[0]
+    },
+    {
+      title: "Avatar",
+      subTitle: "The Way of Water",
+      desc: "Jake Sully lives with his newfound family formed on the extrasolar moon Pandora. Once a familiar threat returns to finish what was previously started, Jake must work with Neytiri and the Na'vi race.",
+      trailerId: "d9MyW72ELq0", 
+      movieObj: topPicks[1]
+    },
+    {
+      title: "Bullet Train",
+      subTitle: "The End of the Line",
+      desc: "Five assassins aboard a fast-moving bullet train find out their missions have something in common. A high-octane, stylish action ride through modern Japan.",
+      trailerId: "0IOsk2Vlc4o", 
+      movieObj: { title: "Bullet Train", _id: "local_bt" }
+    },
+    {
+      title: "Guardians",
+      subTitle: "Vol. 3",
+      desc: "Still reeling from the loss of Gamora, Peter Quill must rally his team to defend the universe and protect one of their own.",
+      trailerId: "u3V5KDHRQvk", 
+      movieObj: trendingMovies[4]
+    },
+    {
+      title: "Top Gun",
+      subTitle: "Maverick",
+      desc: "After thirty years, Maverick is still pushing the envelope as a top naval aviator, but must confront ghosts of his past when he leads TOP GUN's elite graduates.",
+      trailerId: "giXco2jaZ_4", 
+      movieObj: { title: "Top Gun: Maverick", _id: "local_tgm" }
+    }
+  ];
+
+  const [heroIndex, setHeroIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setHeroIndex((prev) => (prev + 1) % heroData.length);
+    }, 15000); // 15s per movie
+    return () => clearInterval(timer);
+  }, [heroData.length]);
+
   return (
     <div className="premium-home">
-      <div className="home-header">
-        <h1 className="main-title">🎬 NAVEK <span className="highlight">MOVIES</span></h1>
-        <p className="welcome-text">Explore your world of stories.</p>
+      {/* 🏙️ CINEMATIC HERO SPOTLIGHT (HOTSTAR STYLE) */}
+      <div className="hero-spotlight">
+         <div className="hero-video-container" key={heroData[heroIndex].trailerId}>
+            <iframe 
+              src={`https://www.youtube.com/embed/${heroData[heroIndex].trailerId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${heroData[heroIndex].trailerId}&showinfo=0&rel=0&modestbranding=1`} 
+              title="Hero Movie" 
+              frameBorder="0" 
+              allow="autoplay; encrypted-media" 
+              className="hero-video-iframe"
+            ></iframe>
+            <div className="hero-overlay-gradient"></div>
+         </div>
+
+         <div className="hero-content anime-slide-up" key={heroData[heroIndex].title}>
+            <h1 className="hero-title">{heroData[heroIndex].title} <span className="dim">{heroData[heroIndex].subTitle}</span></h1>
+            <p className="hero-description">{heroData[heroIndex].desc}</p>
+            <div className="hero-buttons">
+                <button className="btn-hero-play-ultra" onClick={() => navigate('/watch/local', { state: { movie: heroData[heroIndex].movieObj } })}>
+                   <span className="icon">▶</span> Watch Now
+                </button>
+            </div>
+         </div>
+
+         {/* Hero Navigation Dots */}
+         <div className="hero-dots">
+            {heroData.map((_, idx) => (
+               <div 
+                 key={idx} 
+                 className={`hero-dot ${idx === heroIndex ? 'active' : ''}`}
+                 onClick={() => setHeroIndex(idx)}
+               ></div>
+            ))}
+         </div>
       </div>
 
       <div className="main-content-wrapper">
