@@ -2,7 +2,6 @@ import React, { useMemo, useRef, useState, useEffect, useCallback } from "react"
 import { useNavigate } from "react-router-dom";
 import { Container, Form } from "react-bootstrap";
 import "../styles/recommendations.css";
-import TrailerModal from "../components/movie/TrailerModal";
 import { getMovies } from "../services/movieService";
 import {
   slider1, slider2, slider3, slider4, slider5, slider6,
@@ -10,8 +9,56 @@ import {
   slider13, slider14, slider15, slider16
 } from "../data/movieData";
 import {
-  Smile, CloudRain, Flame, Heart, Laugh, Ghost, Zap, Brain, Sun, Coffee, Lightbulb, Search, Crown, Moon, Music, Sparkles, Armchair, Eye, Crosshair, Compass, MapPin, Wind, GraduationCap, Utensils, Waves, Plane, Home as HomeIcon
+  CloudRain, Flame, Heart, Laugh, Ghost, Brain, Sun, Coffee, Lightbulb, Crown, Music, Sparkles, Armchair, Eye, Crosshair, Compass, MapPin, Wind, GraduationCap, Utensils, Waves, Plane, Home as HomeIcon
 } from "lucide-react";
+
+const genres = [
+  { title: "🇮🇳 Indian Movies", key: "Indian" },
+  { title: "🇰🇷 Korean Movies", key: "Korean" },
+  { title: "🔥 Action Movies", key: "Action" },
+  { title: "👻 Horror Movies", key: "Horror" },
+  { title: "😂 Comedy Movies", key: "Comedy" },
+  { title: "🦸 Superhero Movies", key: "Superhero" },
+  { title: "🚀 Sci-Fi Movies", key: "Sci-Fi" },
+  { title: "❤️ Love Movies", key: "Romance" },
+  { title: "🍥 Anime Movies", key: "Anime" },
+  { title: "🧒 Kids Movies", key: "Kids" },
+  { title: "😄 Happy Movies", key: "Comedy" },
+  { title: "😢 Sad Movies", key: "Drama" },
+  { title: "🔥 Motivational Movies", key: "Motivational" },
+  { title: "✨ Wholesome Movies", key: "Wholesome" },
+  { title: "🔞 R Rated Movies", key: "Thriller" },
+  { title: "🕵️ Mystery & Thriller", key: "Mystery" },
+  { title: "🎬 Tamil Movies", key: "", lang: "ta" },
+  { title: "🎬 English Movies", key: "", lang: "en" },
+  { title: "🎬 Korean Movies", key: "", lang: "ko" },
+  { title: "🎬 Japanese Movies", key: "", lang: "ja" },
+  { title: "🎬 Hindi Movies", key: "", lang: "hi" },
+  { title: "🎬 Telugu Movies", key: "", lang: "te" }
+];
+
+const emotionsList = [
+  { id: "sad", name: "Sad", Icon: CloudRain, color: "#0088ff", genres: ["Drama", "Inspirational"] },
+  { id: "motivated", name: "Motivated", Icon: Flame, color: "#ff5500", genres: ["Sport", "Biography"] },
+  { id: "romantic", name: "Romantic", Icon: Heart, color: "#ff007f", genres: ["Romance"] },
+  { id: "funny", name: "Funny", Icon: Laugh, color: "#00ffd5", genres: ["Comedy"] },
+  { id: "scared", name: "Scared", Icon: Ghost, color: "#a200ff", genres: ["Horror", "Thriller"] },
+  { id: "mindblown", name: "Mind-Blown", Icon: Brain, color: "#00d2ff", genres: ["Science Fiction", "Mystery", "Sci-Fi"] },
+  { id: "feelgood", name: "Feel Good", Icon: Sun, color: "#ff66b2", genres: ["Family", "Drama"] },
+  { id: "relaxed", name: "Relaxed", Icon: Coffee, color: "#4dff4d", genres: ["Comedy", "Slice of Life"] },
+  { id: "thoughtful", name: "Thoughtful", Icon: Lightbulb, color: "#a52a2a", genres: ["Drama", "Philosophy"] },
+  { id: "confident", name: "Confident", Icon: Crown, color: "#ffd700", genres: ["Action", "Adventure"] },
+  { id: "partymood", name: "Party Mood", Icon: Music, color: "#ff1493", genres: ["Music", "Comedy"] },
+  { id: "lazy", name: "Lazy", Icon: Armchair, color: "#8a2be2", genres: ["Comedy"] },
+  { id: "mysterymood", name: "Mystery Mood", Icon: Eye, color: "#808080", genres: ["Thriller", "Crime"] },
+  { id: "revenge", name: "Revenge Mood", Icon: Crosshair, color: "#b22222", genres: ["Action", "Thriller"] },
+  { id: "adventure", name: "Adventure Mood", Icon: Compass, color: "#228b22", genres: ["Adventure", "Fantasy"] }
+];
+
+const emotionMap = {};
+emotionsList.forEach(e => {
+  emotionMap[e.id] = e.genres;
+});
 
 export default function Recommendations() {
   const navigate = useNavigate();
@@ -31,41 +78,16 @@ export default function Recommendations() {
     weather: "Clear",
     detectedState: "Connecting to NAVEK sensors...",
   });
-  const [cinematicMovies, setCinematicMovies] = useState(null); // Changed to null to detect loading
+  const [cinematicMovies, setCinematicMovies] = useState(null); 
   const [isAiLoading, setIsAiLoading] = useState(true);
-  const [fusionBasis, setFusionBasis] = useState("fusion"); // 'fusion' | 'location' | 'atmosphere'
-  const ai_ref = useRef(null); // Cinematic AI Slider Ref
+  const [fusionBasis, setFusionBasis] = useState("fusion"); 
+  const ai_ref = useRef(null); 
 
   // 🔋 Battery-Based Logic State
   const [battery, setBattery] = useState({ level: 100, charging: false });
   const [batteryMovies, setBatteryMovies] = useState([]);
-  const br_ref = useRef(null); // Battery Slider Ref
+  const br_ref = useRef(null); 
 
-
-  const genres = [
-    { title: "🇮🇳 Indian Movies", key: "Indian" },
-    { title: "🇰🇷 Korean Movies", key: "Korean" },
-    { title: "🔥 Action Movies", key: "Action" },
-    { title: "👻 Horror Movies", key: "Horror" },
-    { title: "😂 Comedy Movies", key: "Comedy" },
-    { title: "🦸 Superhero Movies", key: "Superhero" },
-    { title: "🚀 Sci-Fi Movies", key: "Sci-Fi" },
-    { title: "❤️ Love Movies", key: "Romance" },
-    { title: "🍥 Anime Movies", key: "Anime" },
-    { title: "🧒 Kids Movies", key: "Kids" },
-    { title: "😄 Happy Movies", key: "Comedy" },
-    { title: "😢 Sad Movies", key: "Drama" },
-    { title: "🔥 Motivational Movies", key: "Motivational" },
-    { title: "✨ Wholesome Movies", key: "Wholesome" },
-    { title: "🔞 R Rated Movies", key: "Thriller" },
-    { title: "🕵️ Mystery & Thriller", key: "Mystery" },
-    { title: "🎬 Tamil Movies", key: "", lang: "ta" },
-    { title: "🎬 English Movies", key: "", lang: "en" },
-    { title: "🎬 Korean Movies", key: "", lang: "ko" },
-    { title: "🎬 Japanese Movies", key: "", lang: "ja" },
-    { title: "🎬 Hindi Movies", key: "", lang: "hi" },
-    { title: "🎬 Telugu Movies", key: "", lang: "te" }
-  ];
 
   useEffect(() => {
     const fetchAll = async () => {
@@ -181,10 +203,7 @@ export default function Recommendations() {
     fetchAll();
   }, []);
 
-  // 🎬 Trailer State
-  const [selectedMovie, setSelectedMovie] = useState(null);
-  const [isTrailerOpen, setIsTrailerOpen] = useState(false);
-
+  // 🎬 Streaming Logic 
   const handlePlay = (movie) => {
     // Navigate to Premium Streaming Player Page
     navigate(`/watch/${movie._id || 'local'}`, { state: { movie } });
@@ -522,29 +541,7 @@ export default function Recommendations() {
 
   }, [allMovies, watchlist]);
 
-  // 🎭 EMOTION MAP (Linking moods to genres)
-  const emotionsList = [
-    { id: "sad", name: "Sad", Icon: CloudRain, color: "#0088ff", genres: ["Drama", "Inspirational"] },
-    { id: "motivated", name: "Motivated", Icon: Flame, color: "#ff5500", genres: ["Sport", "Biography"] },
-    { id: "romantic", name: "Romantic", Icon: Heart, color: "#ff007f", genres: ["Romance"] },
-    { id: "funny", name: "Funny", Icon: Laugh, color: "#00ffd5", genres: ["Comedy"] },
-    { id: "scared", name: "Scared", Icon: Ghost, color: "#a200ff", genres: ["Horror", "Thriller"] },
-    { id: "mindblown", name: "Mind-Blown", Icon: Brain, color: "#00d2ff", genres: ["Science Fiction", "Mystery", "Sci-Fi"] },
-    { id: "feelgood", name: "Feel Good", Icon: Sun, color: "#ff66b2", genres: ["Family", "Drama"] },
-    { id: "relaxed", name: "Relaxed", Icon: Coffee, color: "#4dff4d", genres: ["Comedy", "Slice of Life"] },
-    { id: "thoughtful", name: "Thoughtful", Icon: Lightbulb, color: "#a52a2a", genres: ["Drama", "Philosophy"] },
-    { id: "confident", name: "Confident", Icon: Crown, color: "#ffd700", genres: ["Action", "Adventure"] },
-    { id: "partymood", name: "Party Mood", Icon: Music, color: "#ff1493", genres: ["Music", "Comedy"] },
-    { id: "lazy", name: "Lazy", Icon: Armchair, color: "#8a2be2", genres: ["Comedy"] },
-    { id: "mysterymood", name: "Mystery Mood", Icon: Eye, color: "#808080", genres: ["Thriller", "Crime"] },
-    { id: "revenge", name: "Revenge Mood", Icon: Crosshair, color: "#b22222", genres: ["Action", "Thriller"] },
-    { id: "adventure", name: "Adventure Mood", Icon: Compass, color: "#228b22", genres: ["Adventure", "Fantasy"] }
-  ];
-
-  const emotionMap = {};
-  emotionsList.forEach(e => {
-    emotionMap[e.id] = e.genres;
-  });
+  // 🎭 EMOTION SEARCH (Derived from global emotionMap)
 
   const searchResults = useMemo(() => {
     if (!query.trim()) return [];
@@ -1022,14 +1019,6 @@ export default function Recommendations() {
           </>
         )}
       </Container>
-
-      {/* Trailer Modal */}
-      <TrailerModal
-        isOpen={isTrailerOpen}
-        onClose={() => setIsTrailerOpen(false)}
-        selectedMovie={selectedMovie}
-        toggleWatchlist={toggleWatchlist}
-      />
     </div>
   );
 }

@@ -1,7 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getMovies } from "../services/movieService";
-import TrailerModal from "../components/movie/TrailerModal";
 import GenreSection from "../components/movie/GenreSection";
 import LanguageSection from "../components/movie/LanguageSection";
 import "../styles/home.css";
@@ -14,8 +13,6 @@ export default function Home() {
   const navigate = useNavigate();
   const [globalMovies, setGlobalMovies] = useState([]);
   const [actionMovies, setActionMovies] = useState([]);
-  const [selectedMovie, setSelectedMovie] = useState(null);
-  const [isTrailerOpen, setIsTrailerOpen] = useState(false);
   const [watchlist, setWatchlist] = useState(
     JSON.parse(localStorage.getItem("watchlist")) || []
   );
@@ -102,23 +99,8 @@ export default function Home() {
     }
   };
 
-  const toggleWatchlist = (movie) => {
-    let updated;
-    if (watchlist.find(m => m.title === movie.title)) {
-      updated = watchlist.filter(m => m.title !== movie.title);
-    } else {
-      updated = [...watchlist, movie];
-    }
-    setWatchlist(updated);
-    localStorage.setItem("watchlist", JSON.stringify(updated));
-  };
-
   const s1 = useRef(null);
   const s2 = useRef(null);
-  const s3 = useRef(null);
-  const s4 = useRef(null);
-  const s5 = useRef(null);
-  const s6 = useRef(null);
   const s7 = useRef(null);
   const s8 = useRef(null);
   const s9 = useRef(null);

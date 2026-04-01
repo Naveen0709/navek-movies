@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Card, Button, Badge, Modal, Form, Spinner } from "react-bootstrap";
+import { Container, Button, Badge, Modal, Form, Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "./Profile.css";
 
@@ -67,7 +67,7 @@ export default function Profile() {
 
     setWatchHistory(safeHistory.reverse()); 
     setLoading(false);
-  }, []);
+  }, [safeSearch]);
 
   const handleLogout = () => {
     localStorage.removeItem("user");

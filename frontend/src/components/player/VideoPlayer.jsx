@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useCallback } from "react";
 import Controls from "./Controls";
 import "../../styles/player.css";
 
@@ -86,20 +86,20 @@ const VideoPlayer = ({ movie, onNext }) => {
     }
 
     return () => stopYTProgress();
-  }, [movie, playerType]);
+  }, [movie, playerType, onNext, startYTProgress, stopYTProgress, volume]);
 
-  const startYTProgress = () => {
+  const startYTProgress = useCallback(() => {
     stopYTProgress();
     progressInterval.current = setInterval(() => {
       if (ytPlayerRef.current && ytPlayerRef.current.getCurrentTime) {
         setCurrentTime(ytPlayerRef.current.getCurrentTime());
       }
     }, 500);
-  };
+  }, [stopYTProgress]);
 
-  const stopYTProgress = () => {
+  const stopYTProgress = useCallback(() => {
     if (progressInterval.current) clearInterval(progressInterval.current);
-  };
+  }, []);
 
   // 🔊 Generic Handlers for Both Players
   const togglePlay = () => {

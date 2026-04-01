@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { 
   ArrowLeft, SkipBack, SkipForward, Play, Pause, Volume2, 
-  Maximize, Settings, Info, Globe, Activity, Gauge, Check, Monitor, 
+  Maximize, Settings, Info, Globe, Activity, Gauge, Check, 
   ChevronRight, Volume1, VolumeX
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
